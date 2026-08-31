@@ -95,4 +95,4 @@ The installer pkg drops **NetworkRPM** into `/Applications`. No restart needed �
 
 Copyright © 2024–2026 [GalCon](https://www.gal.uk).
 
-Free to use for anything — personal, commercial, you name it — as long as you credit GalCon and include a link to [gal.uk](https://www.gal.uk).
+Free to use and to pass on at no charge — personal or commercial — as long as you credit GalCon and include a link to [gal.uk](https://www.gal.uk). You may not sell the app.
