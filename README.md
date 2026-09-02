@@ -4,7 +4,9 @@ A small macOS app from [GalCon](https://www.gal.uk). It tests how fast your netw
 
 ![NetworkRPM](NetworkRPM.png)
 
-Click **Test** to run a measurement. **Save** (⌘S) writes the last result to a text file, including an Ethernet or Wi-Fi snapshot taken at the moment the test started.
+Use it on the **internet** (Apple’s servers), or against another Mac on your **LAN or Wi-Fi** running **NetworkRPM Server**. The same measurement tells you whether the weak point is the WAN, the wireless hop, or the wired path in the building.
+
+Click **Test** to run a measurement. **Stop** cancels a run in progress; figures collected so far stay on screen. **Save** (⌘S) writes the last result to a text file, including an Ethernet or Wi-Fi snapshot taken at the moment the test started.
 
 ## Why responsiveness matters
 
@@ -50,46 +52,85 @@ The app uses colour to help you read results at a glance:
 ## Using the app
 
 1. Open **NetworkRPM**.
-2. Pick your options in the toolbar, then click **Test**. Speed and RPM update while the test runs.
+2. Pick your options in the toolbar, then click **Test**. Speed and RPM update while the test runs. **Stop** cancels a run in progress; figures collected so far stay on screen.
 3. Hover any **ⓘ** icon for a plain-English explanation of that control or result.
 4. For the full help page, click **?** next to Save, or go to **Help → NetworkRPM Help**.
 
 | Option | What it does |
 | --- | --- |
-| **Interface** | Which connection to test. Automatic uses your Mac's default. Only connections currently in use appear here. |
+| **Interface** | Which connection to test. Automatic uses your Mac's default. Only connections currently in use appear here. Bind to Wi-Fi or Ethernet when you want to compare those paths. |
 | **Mode** | Parallel tests upload and download at the same time. Sequential does them one after the other. |
 | **Protocol** | Automatic picks for you. Force HTTP/2 or HTTP/3 (QUIC) if you need to compare protocols. |
 | **Time** | Cap how long the test runs, or leave it Automatic so it stops when it has enough samples. |
+| **Server** | **Internet** uses Apple's servers (WAN). **On this network** lists Network Quality servers advertised with Bonjour, including **NetworkRPM Server** on another Mac (LAN / Wi-Fi). Recents keeps the last 5 you used. **Custom URL…** is for a configuration URL when the server is not advertised. Interface, mode, protocol, and time still apply. |
 
-The test saturates the link for up to the time you set. Don't run it on a metered or shared connection you care about.
+The test saturates the path you chose for up to the time you set. Don't run it on a metered or shared connection you care about.
+
+## NetworkRPM Server
+
+**NetworkRPM Server** is a small companion app. It runs macOS `networkQuality` as a local server so **NetworkRPM** on another Mac can test the network between them — office Wi-Fi, Ethernet, a VLAN — without sending that load to the internet.
+
+### Set up the server
+
+1. Install **NetworkRPM Server** on a second Mac on the same network. It is a separate download from NetworkRPM.
+2. Open it. It picks a free port and starts automatically.
+3. Wait until the LED is **green** (running). Yellow means starting; red means stopped.
+4. Leave it open for as long as you want others to test against this Mac.
+
+### Run a LAN or Wi-Fi test
+
+1. On the Mac you want to measure, open **NetworkRPM**.
+2. Under **Server**, choose the other Mac in **On this network**.
+3. Optionally set **Interface** to Wi-Fi or Ethernet if you want to force that path.
+4. Click **Test**.
+
+That run stresses the local path. Compare it with **Server → Internet** on the same Mac to see whether the bottleneck is the LAN or the WAN.
+
+### If the server does not appear
+
+Bonjour can be blocked on some networks. On the server Mac, click **Copy URL**, then on the test Mac choose **Custom URL…** and paste it. NetworkRPM already skips the self-signed certificate check for local servers.
+
+### Stop the server
+
+Click **Stop** to take it down without quitting. The LED turns red. **Start** brings it back on a new port. Quit also stops the server.
 
 ## Install
 
-macOS 14.6 or later. Universal (Apple silicon and Intel).
+macOS 14.6 or later. Universal (Apple silicon and Intel). NetworkRPM and NetworkRPM Server are separate installs.
 
-**DMG:** [Download NetworkRPM](https://github.com/ofirgalcon/NetworkRPM/releases/latest/download/NetworkRPM.dmg) and drag it to Applications.
+**NetworkRPM (the tester)**
 
-**PKG:** [Download the installer](https://github.com/ofirgalcon/NetworkRPM/releases/latest/download/NetworkRPM.pkg), or deploy it with MDM.
+- **DMG:** [Download NetworkRPM](https://github.com/ofirgalcon/NetworkRPM/releases/latest/download/NetworkRPM.dmg)
+- **PKG:** [Download the installer](https://github.com/ofirgalcon/NetworkRPM/releases/latest/download/NetworkRPM.pkg)
+
+**NetworkRPM Server (the LAN target)**
+
+- **DMG:** [Download NetworkRPM Server](https://github.com/ofirgalcon/NetworkRPM/releases/latest/download/NetworkRPM-Server.dmg)
+- **PKG:** [Download the installer](https://github.com/ofirgalcon/NetworkRPM/releases/latest/download/NetworkRPM-Server.pkg)
 
 Older builds: [Releases](https://github.com/ofirgalcon/NetworkRPM/releases).
 
-**Homebrew** (cask — GUI apps are not formulas):
+**Homebrew** (casks — GUI apps are not formulas):
 
 ```bash
 brew install --cask networkrpm
+brew install --cask networkrpm-server
 ```
 
-That command works once the cask is on Homebrew. It fetches the disk image from GitHub Releases.
+Those commands work once the casks are on Homebrew. Each fetches its own disk image from GitHub Releases.
 
-If you still have the old **NetworkQuality** app, quit it and remove it after installing.
+If you still have the old **NetworkQuality** app, quit it and remove it after installing NetworkRPM.
 
 ## Deploying
 
-The installer pkg drops **NetworkRPM** into `/Applications`. No restart needed — just quit the app first if it is already open.
+Each installer pkg drops its app into `/Applications`. No restart needed — quit the app first if it is already open.
 
-**Munki:** import the [pkg from Releases](https://github.com/ofirgalcon/NetworkRPM/releases/latest/download/NetworkRPM.pkg) — receipt is `com.gal.NetworkQuality`. Pin a version with the tagged URL (`.../releases/download/vX.Y.Z/NetworkRPM.pkg`).
+**Munki / Jamf:** import the pkgs from [Releases](https://github.com/ofirgalcon/NetworkRPM/releases/latest). The pkg receipt and the app’s short version are the full version (for example `2.2.30`), matching the GitHub tag. Pin a version with the tagged URL (`.../releases/download/vX.Y.Z/NetworkRPM.pkg` or `.../NetworkRPM-Server.pkg`).
 
-**Jamf:** Upload that pkg as a package and deploy as usual.
+| App | Receipt | Installs |
+| --- | --- | --- |
+| NetworkRPM | `com.gal.NetworkQuality` | `/Applications/NetworkRPM.app` |
+| NetworkRPM Server | `com.gal.NetworkRPMServer` | `/Applications/NetworkRPM Server.app` |
 
 ## License
 
