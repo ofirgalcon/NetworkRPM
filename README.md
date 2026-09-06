@@ -68,10 +68,6 @@ If you still have the old **NetworkQuality** app, quit it and remove it after in
 The test saturates the selected path for its entire duration — and again on every repeat. Avoid running tests over metered connections or links that others depend on. Save exports the most recent finished run as text, even during the pause between repeats. The Repeat CSV is the log of the whole schedule.
 
 <p align="center">
-  <img src="NetworkRPM-repeat-schedule.png" width="66%" alt="Repeat schedule">
-</p>
-
-<p align="center">
   <img src="NetworkRPM-repeat-graph.png" width="66%" alt="Repeat Graph">
 </p>
 
@@ -104,10 +100,6 @@ Colour helps you interpret results at a glance:
   <img src="NetworkRPM-Server.png" width="66%" alt="NetworkRPM Server">
 </p>
 
-<p align="center">
-  <img src="NetworkRPM-compare.png" width="66%" alt="Compare Internet and Local Network">
-</p>
-
 ### Set up the server
 
 1. Install **NetworkRPM Server** on a second Mac on the same network. It is a separate download from NetworkRPM.
@@ -136,6 +128,10 @@ NetworkRPM runs two consecutive tests in a single automated session — first ag
 - **Responsiveness & HTTP loaded** — compares RPM and loaded latency side-by-side to highlight where delays occur under traffic.
 - **Automated verdict** — analyzes the results to explain which hop is the limiting factor (for example, *“The local path held up. The internet path did not”* or *“Both paths held up”*), accompanied by WAN uplink headroom notes on fast local connections.
 - **Unified export** — clicking **Save** (⌘S) exports full metrics from both runs along with the comparison verdict in a single file.
+
+<p align="center">
+  <img src="NetworkRPM-compare.png" width="66%" alt="Compare Internet and Local Network">
+</p>
 
 If the remote server is connected via Wi-Fi, slow Ethernet (< 1 Gbps), or a VPN, Compare prompts for confirmation before starting because the server's link can become the bottleneck.
 
