@@ -45,27 +45,28 @@ If you still have the old **NetworkQuality** app, quit it and remove it after in
 
 1. Open **NetworkRPM**.
 2. Adjust options if needed (defaults work out of the box), then click **Test**. Speed and RPM update while the test runs. Click **Stop** to cancel the active run and any remaining repeats; numbers collected so far stay on screen.
-3. **Repeat** (next to Test) schedules multiple runs. When Repeat is on, **Every** sets the idle wait interval between runs. The first **Test** with Repeat on prompts for a CSV destination; each finished run is automatically appended, so stopping early still leaves previously written rows intact.
-4. **Save** (⌘S) writes the latest result as text — including Ethernet link metrics (speed, duplex, media) or Wi-Fi conditions (at start, lowest under load, and completion).
-5. The **chart** button next to Help (or **File → Repeat Graph**) plots the Repeat CSV in real time, displaying RPM and Mbps along with Wi-Fi rate and SNR when recorded. Use **File → Open Repeat CSV…** (or **Open…** on the graph) to review an older file; **Open…** is disabled while Repeat is active.
-6. Hover over the info icon next to any control or result for a plain-English explanation. The **?** button, or **Help → NetworkRPM Help**, opens this page.
+3. **Repeat** (the repeat icon in the footer) turns Repeat mode on and slides in a **Repeat** panel to set how many runs and **Interval**. Click **Start Repeat** (the Test button) to begin. Repeat Graph opens when a schedule starts so you can watch it; that window is the chart only. A run that errors is logged and the schedule continues until **Stop** or the last run. Finished runs are kept in **History**; **Export…** on Repeat Graph (or **File → Export Repeat CSV…**) saves a CSV copy if you want one. Click the repeat icon again to hide the panel and turn Repeat off.
+4. **Copy** (⌘C) puts the latest result on the clipboard. **Share** uses the standard macOS share sheet. **Save** (⌘S) writes the same text to a file — including Ethernet link metrics (speed, duplex, media) or Wi-Fi conditions (at start, lowest under load, and completion).
+5. The **chart** button next to Repeat (or **File → Repeat Graph**) plots Repeat in real time, displaying RPM and Mbps along with Wi-Fi rate and SNR when recorded. **Export…** writes a CSV copy; History already keeps the log. Use **File → Open Repeat CSV…** (or **Open…** on the graph) to review an older file; **Open…** is disabled while Repeat is active.
+6. **History** (the clock button, or **File → History**) keeps the last 20 sessions. **Pin** stores a session permanently so it does not roll off. Double-click a row (or press Return) to **Show** a run or Compare on the main window, or **Open Graph** for a Repeat session. Show and Open Graph wait if a test, Repeat, or Compare is still running, and History explains why. Repeat rows can **Export CSV…**. Internet rows include WAN IP and ISP when known. **Share** uses the standard macOS share sheet. If History cannot be read, the window says so and will not overwrite the file; **Show in Finder** opens it.
 
 <p align="center">
-  <img src="NetworkRPM-server-menu.png" width="66%" alt="Server menu">
+  <img src="NetworkRPM-history.png" width="66%" alt="History">
 </p>
+7. Hover over the info icon next to any control or result for a plain-English explanation. The **?** button, or **Help → NetworkRPM Help**, opens this page.
 
 | Option | What it does |
 | --- | --- |
-| **Interface** | Which connection to test. Automatic is selected by default and follows the Mac’s primary route (displaying the interface name in parentheses). Only active network connections appear in this menu. Bind directly to Wi-Fi or Ethernet to compare those paths. A connected **VPN** is listed separately; those results measure the tunnel rather than the underlying physical link. |
-| **Mode** | Parallel tests upload and download at the same time. Sequential tests them one after the other. |
-| **Protocol** | Automatic chooses for you. Force HTTP/2 or HTTP/3 (QUIC) to compare protocols. HTTP/3 is omitted for servers on the Local Network, as local servers rarely support QUIC. |
-| **Time** | How long **each** run may last. Set a cap, or leave Automatic so it finishes once it collects sufficient samples. Automatic displays total data transferred beside the progress bar. |
-| **Server** | Choose Apple’s internet servers or a local Network Quality server — including **NetworkRPM Server**. Discovered servers appear under **Local Network** with their connection details (`Ethernet · 1 Gbps` or `Wi-Fi`). Use **Custom URL…** at the bottom (or **File → Custom Server URL…**) for manual endpoints. Recents remembers the last 5. |
-| **Test** | Runs the test against the selected server. When targeting a server under **Local Network**, the Test button menu offers **Compare Internet and …** (Repeat must be Off). If that server is connected via Wi-Fi, slow Ethernet, or a VPN, Compare prompts for confirmation first because the server's link becomes the bottleneck. After a comparison, Save exports both runs. Remembered servers that are currently offline are listed under Recents with Test disabled until they return. |
-| **Repeat** | Located next to Test; sets how many times to run. Off runs a single test. While Repeat is active — including the pause between runs — the Mac stays awake so system idle sleep does not throttle a test. The display can still sleep and the screen can lock. |
-| **Every** | Appears next to Repeat when Repeat is on. Sets the idle wait after a run finishes before the next begins. Tests never overlap. |
+| **Interface** | Which connection to test. Each time you open NetworkRPM, the Mac’s primary interface is selected. **Automatic (system default)** follows the Mac’s default route. Only active network connections appear in this menu. Bind directly to Wi-Fi or Ethernet to compare those paths. A connected **VPN** is listed separately; those results measure the tunnel rather than the underlying physical link. |
+| **Mode** | Parallel tests upload and download at the same time. Sequential tests them one after the other. Remembers your last choice. |
+| **Protocol** | Automatic chooses for you. Force HTTP/2 or HTTP/3 (QUIC) to compare protocols. HTTP/3 is omitted for servers on the Local Network, as local servers rarely support QUIC. Remembers your last choice. |
+| **Time** | How long **each** run may last. Set a cap, or leave Automatic so it finishes once it collects sufficient samples. Automatic displays total data transferred beside the progress bar. Remembers your last choice. |
+| **Server** | Choose Apple’s internet servers or a local Network Quality server — including **NetworkRPM Server**. Discovered servers appear under **Local Network** with their connection details (`Ethernet · 1 Gbps` or `Wi-Fi`). Hold **Option** to also list this Mac; after you select it, it stays selected when you release Option. Use **Custom URL…** at the bottom of the Server menu (or **NetworkRPM → Custom Server URL…**) for manual endpoints. Recents remembers the last 5. |
+| **Test** | Runs the test against the selected server. When Repeat is on, this button is **Start Repeat**. When targeting a server under **Local Network**, the Test button menu offers **Compare Internet and …** (hidden while Repeat is on). If that server is connected via Wi-Fi, slow Ethernet, or a VPN, Compare prompts for confirmation first because the server's link becomes the bottleneck. After a comparison, Copy and Save export both runs. Remembered servers that are currently offline are listed under Recents with Test disabled until they return. |
+| **Repeat** | Footer icon next to Help. Highlighted means Repeat is on: a Repeat panel slides in with how many runs and **Interval**. Off (icon not highlighted) hides the panel and runs a single test. Runs and Interval remember the last choice; Repeat itself starts Off each launch. While Repeat is active — including the pause between runs — the Mac stays awake so system idle sleep does not throttle a test. The display can still sleep and the screen can lock. A failed run is stored in the log and the remaining runs still happen. |
+| **Interval** | In the Repeat panel when Repeat is on. Sets the idle wait after a run finishes before the next begins. Tests never overlap. Remembers your last choice. |
 
-The test saturates the selected path for its entire duration — and again on every repeat. Avoid running tests over metered connections or links that others depend on. Save exports the most recent finished run as text, even during the pause between repeats. The Repeat CSV is the log of the whole schedule.
+The test saturates the selected path for its entire duration — and again on every repeat. Avoid running tests over metered connections or links that others depend on. Copy and Save use the most recent finished run as text, even during the pause between repeats. History keeps the Repeat log; Export… on Repeat Graph saves a CSV copy.
 
 <p align="center">
   <img src="NetworkRPM-repeat-graph.png" width="66%" alt="Repeat Graph">
@@ -103,11 +104,9 @@ Colour helps you interpret results at a glance:
 ### Set up the server
 
 1. Install **NetworkRPM Server** on a second Mac on the same network. It is a separate download from NetworkRPM.
-2. Open it. The server selects an available port and starts automatically. The large name is this Mac’s Sharing name — which is how NetworkRPM lists it under **Local Network** (rather than by raw `hostname:port`). Interface, link speed, and local IP appear below the **Interface** popup. Copy the configuration URL only if Bonjour is blocked on your network; clicking **Start** chooses a new port, so older copied URLs will expire.
-3. Wait until the status LED turns **green** (running). Yellow indicates starting; blue indicates a client is actively testing against this Mac; red indicates stopped.
+2. Open it. The server selects an available port and starts automatically. The large name is this Mac’s Sharing name — which is how NetworkRPM lists it under **Local Network** (rather than by raw `hostname:port`). The current adapter, link speed, and local IP appear in the window. Copy the configuration URL only if Bonjour is blocked on your network; clicking **Start** chooses a new port, so older copied URLs will expire.
+3. Wait until the status LED turns **green** (running). Yellow indicates starting; blue indicates a client is actively testing against this Mac; red indicates stopped. If the server never begins accepting connections, the LED returns to red with an error — click **Start** to try again.
 4. Leave the window open while you want others to test against this Mac. Closing the window quits the app and stops the server. Enable **Launch at Login** to start it automatically upon login.
-
-**Interface** binds the server to a specific network adapter — useful on dual-homed Macs to ensure clients test over the intended Ethernet link. Automatic follows the default route.
 
 While running, **Prevent sleep while serving** (enabled by default) keeps the Mac awake so idle power management does not throttle tests from other Macs. The display can still sleep and the screen can lock. Uncheck this in the server window if you prefer to allow sleep.
 
@@ -126,8 +125,8 @@ NetworkRPM runs two consecutive tests in a single automated session — first ag
 
 - **Uplink & Download** — compares bandwidth across both paths to reveal internet capacity versus local infrastructure limits.
 - **Responsiveness & HTTP loaded** — compares RPM and loaded latency side-by-side to highlight where delays occur under traffic.
-- **Automated verdict** — analyzes the results to explain which hop is the limiting factor (for example, *“The local path held up. The internet path did not”* or *“Both paths held up”*), accompanied by WAN uplink headroom notes on fast local connections.
-- **Unified export** — clicking **Save** (⌘S) exports full metrics from both runs along with the comparison verdict in a single file.
+- **Automated verdict** — analyzes the results to explain which hop is the limiting factor (for example, *“The local path held up. The internet path did not”* or *“Both paths held up”*), accompanied by WAN uplink headroom notes on fast local connections. A line under the verdict notes when the far Mac is on Wi-Fi, slow Ethernet, or a VPN, or when its link type is unknown.
+- **Unified export** — **Copy** (⌘C) or **Save** (⌘S) exports full metrics from both runs along with the comparison verdict.
 
 <p align="center">
   <img src="NetworkRPM-compare.png" width="66%" alt="Compare Internet and Local Network">
@@ -135,15 +134,17 @@ NetworkRPM runs two consecutive tests in a single automated session — first ag
 
 If the remote server is connected via Wi-Fi, slow Ethernet (< 1 Gbps), or a VPN, Compare prompts for confirmation before starting because the server's link can become the bottleneck.
 
+If the Local Network run fails, is stopped, or the server disappears after the Internet test, NetworkRPM keeps the Internet results on screen and in History instead of discarding them.
+
 For the most accurate diagnostics, connect the **server** Mac to gigabit (or faster) Ethernet, and place the **tester** Mac on the link you want to evaluate. Two Macs testing across Wi-Fi measure two wireless links sharing an access point rather than the building infrastructure. Likewise, a 100 Mbps adapter on the server caps the entire test at 100 Mbps. NetworkRPM flags Wi-Fi or slow Ethernet when reported by the server; otherwise Compare indicates that the remote link type could not be determined.
 
 ### Stop the server
 
-Click **Stop** to take the server down without quitting the app (the LED turns red). Click **Start** to bring it back online on a new port. Closing the window or choosing Quit also stops the server.
+Click **Stop** to take the server down without quitting the app (the LED turns red and the configuration URL clears). Click **Start** to bring it back online on a new port. Closing the window or choosing Quit also stops the server.
 
 ### If the server does not appear
 
-Bonjour discovery can occasionally be restricted on enterprise or segmented networks. If the server does not appear automatically, copy the configuration URL from the server Mac (using the copy icon next to it), then on the testing Mac choose **Custom URL…** from the **Server** popup and paste it. NetworkRPM automatically handles the self-signed TLS certificate required for local testing.
+Bonjour discovery can occasionally be restricted on enterprise or segmented networks, or if **Local Network** permission is denied in System Settings. If NetworkRPM reports that it could not browse the Local Network, open **System Settings → Privacy & Security → Local Network** and allow NetworkRPM. If the server still does not appear, copy the configuration URL from the server Mac (using the copy icon next to it), then on the testing Mac choose **Custom URL…** from the **Server** popup and paste it. NetworkRPM automatically handles the self-signed TLS certificate required for local testing.
 
 ## Deploying
 
@@ -154,7 +155,7 @@ Each installer pkg installs its app into `/Applications`. No restart is required
 | NetworkRPM | `com.gal.NetworkQuality` | `/Applications/NetworkRPM.app` |
 | NetworkRPM Server | `com.gal.NetworkRPMServer` | `/Applications/NetworkRPM Server.app` |
 
-**Munki / Jamf:** Import the pkgs from [Releases](https://github.com/ofirgalcon/NetworkRPM/releases/latest). The pkg receipt and the app’s short version match the GitHub release tag. To pin a specific version, use the versioned download URL (`.../releases/download/vX.Y.Z/NetworkRPM.pkg` or `.../releases/download/vX.Y.Z/NetworkRPM-Server.pkg`).
+**Munki / Jamf:** Import the pkgs from [Releases](https://github.com/ofirgalcon/NetworkRPM/releases/latest). The GitHub release tag is the NetworkRPM version (`2.3.2.N`). NetworkRPM’s pkg receipt version matches that tag. NetworkRPM Server ships on the same tag with its own short version (`1.1.2.N`). Compare the server pkg against receipt `com.gal.NetworkRPMServer`, not the GitHub tag. To pin a specific suite, use the versioned download URL (`.../releases/download/vX.Y.Z.N/NetworkRPM.pkg` or `.../releases/download/vX.Y.Z.N/NetworkRPM-Server.pkg`).
 
 **Update checks:** Both apps check GitHub for updates approximately once per day, and **Check for Updates…** performs an immediate check on demand. They notify of updates but never overwrite the running app. To disable automatic checks, set `EnableUpdateChecks` to `false` in each app’s preference domain (omitting the key or setting `true` leaves checks enabled). A configuration profile with a Custom Settings payload for these domains works identically.
 
@@ -167,4 +168,4 @@ sudo defaults write /Library/Preferences/com.gal.NetworkRPMServer EnableUpdateCh
 
 Copyright © 2024–2026 [GalCon](https://www.gal.uk).
 
-Free to use and redistribute at no charge — for personal or commercial use — provided you credit GalCon and include a link to [gal.uk](https://www.gal.uk). You may not sell the app.
+Free to use and redistribute at no charge — for personal or commercial use — provided you credit GalCon and include a link to [gal.uk](https://www.gal.uk). Not for resale.
