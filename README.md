@@ -53,6 +53,7 @@ If you still have the old **NetworkQuality** app, quit it and remove it after in
 <p align="center">
   <img src="NetworkRPM-history.png" width="66%" alt="History">
 </p>
+
 7. Hover over the info icon next to any control or result for a plain-English explanation. The **?** button, or **Help → NetworkRPM Help**, opens this page.
 
 | Option | What it does |
